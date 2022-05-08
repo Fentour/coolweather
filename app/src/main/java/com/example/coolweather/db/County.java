@@ -1,6 +1,6 @@
 package com.example.coolweather.db;
 
-public class County extends DataSupport{
+public class County extends LitePalSupport{
     private int id;
     private String countyName;
     private String weatherId;
