@@ -77,11 +77,17 @@ public static final int LEVEL_PROVINCE=0;
                     queryCounties();
                 }else if(currentLevel==LEVEL_COUNTY){
                     String weatherId=countyList.get(position).getWeatherId();
+                    if(getActivity()instanceof MainActivity){
                     Intent intent=new Intent(getActivity(),WeatherActivity.class);
                     intent.putExtra("weather_id",weatherId);
                     startActivity(intent);
                     getActivity().finish();
-                }
+                }else if(getActivity()instanceof WeatherActivity){
+                        WeatherActivity activity=(WeatherActivity) getActivity();
+                        activity.drawerLayout.closeDrawers();
+                        activity.swipeRefresh.setRefreshing(true);
+                        activity.requestWeather(weatherId);
+                    }
             }
         });
         backButton.setOnClickListener(new View.OnClickListener(){
@@ -95,6 +101,7 @@ public static final int LEVEL_PROVINCE=0;
             }
         });
         queryProvinces();
+    }
     }
 
     //  查询全国所有的省、市、县，优先从数据库查询，如果没查询到再去服务器上查询
